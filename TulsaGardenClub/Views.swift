@@ -18,7 +18,7 @@ struct HomeView: View {
                 Spacer()
                
                                    
-                                        NavigationLink(destination: ExhibitorEntry()) {
+                                        NavigationLink(destination: ExhibtorEntryView()) {
                                             Text("Exhibitor Entry")
                                                 .font(.title2)
                                                 .padding()
@@ -31,7 +31,7 @@ struct HomeView: View {
                                  
                     .navigationTitle(Text("Tulsa Garden Club"))
             }
-                .navigationBarBackButtonHidden(true)
+                .navigationBarBackButtonHidden(true)    
         }
     }
 }
