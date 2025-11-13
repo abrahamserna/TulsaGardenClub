@@ -9,13 +9,30 @@ import SwiftUI
  
 struct HomeView: View {
     var body: some View {
-        VStack {
-            Text("TULSA GARDEN CLUB")
-                .font(.largeTitle)
-                .bold()
-            Spacer()
+        @State var showExhibitorEntry = false
+      
+            VStack {
+                NavigationStack {
+                    VStack { 
+             
+                Spacer()
+               
+                                   
+                                        NavigationLink(destination: ExhibitorEntry()) {
+                                            Text("Exhibitor Entry")
+                                                .font(.title2)
+                                                .padding()
+                                                .background(Color.green2)
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                        }
+                                    }
+                    .position(x: 200, y:-200)
+                                 
+                    .navigationTitle(Text("Tulsa Garden Club"))
+            }
+                .navigationBarBackButtonHidden(true)
         }
-        .padding()
     }
 }
  
@@ -121,4 +138,8 @@ struct Views: View {
             
         }
     }
+}
+
+#Preview {
+    Views()
 }

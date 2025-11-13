@@ -35,7 +35,7 @@ struct FinalJudge: View {
                 }
                 
                 .position(x: 200, y: 700)
-                NavigationLink(destination: HomeView()) {
+                NavigationLink(destination: Views()) {
                     Text("Finalize")
                         .foregroundColor(.white)
                         .padding()

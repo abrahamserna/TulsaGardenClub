@@ -39,9 +39,30 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.blue.opacity(0.1))
-                    .ignoresSafeArea(edges: .all)
-                
+//                Color(.blue.opacity(0.1))
+//                    .ignoresSafeArea(edges: .all)
+                ZStack {
+                    
+                    Image("TGCLogo")
+                        .resizable()
+                        
+                    
+                        .frame(width: 110, height: 100)
+                        .position(x: 360, y: -100)
+                    Circle()
+                        .fill(Color.darkgreen.opacity(0.9))
+                        .frame(width: 720, height: 720)
+                    Circle()
+                        .fill(Color.mediumgreen)
+                        .frame(width: 660, height: 660)
+                    Circle()
+                        .fill(Color.lightgreen)
+                        .frame(width: 600, height: 600)
+                    
+                    
+                    
+                }
+                .position(x: 200, y: 600)
                 VStack {
                    
                       
@@ -49,73 +70,83 @@ struct ContentView: View {
                    
                     VStack(spacing: 20) {
                         TextField("Email", text: $email, prompt: Text("Enter email..."))
+                            .frame(width: 270)
+                            .padding(8)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.mediumgreen.opacity(0.7), lineWidth: 3))
                             .font(.title2)
-                            .textFieldStyle(.roundedBorder)
-                            .autocapitalization(.none)
+                            .textFieldStyle(.plain)
                         
+                            .autocapitalization(.none)
                         SecureField("Password", text: $password, prompt: Text("Enter password..."))
+                            .frame(width: 270)
+                            .padding(8)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.mediumgreen.opacity(0.7), lineWidth: 3))
                             .font(.title2)
-                            .textFieldStyle(.roundedBorder)
+                            .textFieldStyle(.plain)
                     }
+                    .position(x: 185, y: 420)
                     .padding()
                     VStack(spacing: 16) {
                         Button {
                             loginUser()
                         } label: {
                             Text("LOGIN")
-                                .frame(maxWidth: .infinity)
+                                .frame(width: 240)
                                 .font(.title2.bold())
                                 .padding()
-                                .foregroundColor(.white)
-                                .background(Color.green2.opacity(0.7))
-                                .cornerRadius(16)
+                                .foregroundColor(.lightgreen)
+                                .background(Color.darkgreen)
+                                .cornerRadius(10)
                         }
-                        .navigationDestination(isPresented: $showViews) {
-                            Views()
-                        }
+                        .position(x: 185, y: 160)
+                       
                         
-                        Button {
-                            
-                            showNewAccount.toggle()
-                        } label: {
-                            Text("Creat Account")
-                                .frame(maxWidth: .infinity)
-                                .font(.title2.bold())
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.red.opacity(0.6))
-                                .cornerRadius(16)
-                            
-                                .navigationDestination(isPresented: $showNewAccount) {
-                                    NewAccountView()
-                                }
-                      
-                        }
+//                        Button {
+//                            
+//                            showNewAccount.toggle()
+//                        } label: {
+//                            Text("Creat Account")
+//                                .frame(maxWidth: .infinity)
+//                                .font(.title2.bold())
+//                                .padding()
+//                                .foregroundColor(.white)
+//                                .background(Color.red.opacity(0.6))
+//                                .cornerRadius(16)
+//                            
+//                                .navigationDestination(isPresented: $showNewAccount) {
+//                                    NewAccountView()
+//                                }
+//                      
+//                        }
                         
                     }
                     
                     .padding()
                     
                     Spacer()
-                    Button {
-                        showResetPassword = true
-                    } label: {
-                        Text("Forgot Password?")
-                            .frame(maxWidth: .infinity)
-                            .font(.title3)
-                            .foregroundColor(Color.black)
-                        
-                            .navigationDestination(isPresented: $showResetPassword) {
-                                ResetPassword()
-                            }
-                    }
+//                    Button {
+//                        showResetPassword = true
+//                    } label: {
+//                        Text("Forgot Password?")
+//                            .frame(maxWidth: .infinity)
+//                            .font(.title3)
+//                            .foregroundColor(Color.black)
+//                        
+//                            .navigationDestination(isPresented: $showResetPassword) {
+//                                ResetPassword()
+//                            }
+//                    }
                     
                 }
+          
             }
             
-            .navigationTitle(Text("Login Page"))
-            
+//            .navigationTitle(Text("Login Page"))
+            .navigationDestination(isPresented: $showViews) {
+                Views()
+            }
         }
+        
         }
     
     private func loginUser() {
