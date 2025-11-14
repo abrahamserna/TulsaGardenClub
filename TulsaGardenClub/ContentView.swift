@@ -47,7 +47,7 @@ struct ContentView: View {
                         .resizable()
                         
                     
-                        .frame(width: 110, height: 100)
+                        .frame(width: 140, height: 120)
                         .position(x: 360, y: -100)
                     Circle()
                         .fill(Color.darkgreen.opacity(0.9))

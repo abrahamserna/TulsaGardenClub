@@ -12,26 +12,47 @@ struct HomeView: View {
         @State var showExhibitorEntry = false
       
             VStack {
+                
                 NavigationStack {
-                    VStack { 
-             
-                Spacer()
-               
-                                   
-                                        NavigationLink(destination: ExhibtorEntryView()) {
-                                            Text("Exhibitor Entry")
-                                                .font(.title2)
-                                                .padding()
-                                                .background(Color.green2)
-                                                .foregroundColor(.white)
-                                                .cornerRadius(10)
-                                        }
-                                    }
-                    .position(x: 200, y:-200)
-                                 
-                    .navigationTitle(Text("Tulsa Garden Club"))
+                    ZStack {
+                        LinearGradient(colors: [.lightgreen, .darkgreen], startPoint: .top, endPoint: .bottom)
+                            .ignoresSafeArea()
+                        Image("TGCLogo")
+                            .resizable()
+                            
+                        
+                            .frame(width: 75, height: 65)
+                            .position(x: 340, y: -70)
+                        VStack {
+                            
+                            Spacer()
+                            
+                            
+                            NavigationLink(destination: ExhibtorEntryView()) {
+                                Text("Exhibitor Entry")
+                                    .font(.title2)
+                                    .padding()
+                                    .background(Color.green2)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .padding()
+                            }
+                            NavigationLink(destination: Sweepstakes()) {
+                                Text("Sweepstakes")
+                                    .font(.title2)
+                                    .padding()
+                                    .background(Color.green2)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                        }
+                        
+                        .position(x: 200, y:-100)
+                        
+                        .navigationTitle(Text("Home"))
+                    }
             }
-                .navigationBarBackButtonHidden(true)    
+                .navigationBarBackButtonHidden(true)
         }
     }
 }
