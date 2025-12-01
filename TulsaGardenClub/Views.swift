@@ -70,14 +70,82 @@ struct ProfileView: View {
 }
  
 struct SettingView: View {
+    @State private var notification = false
+    @State private var privacyPolicy = ""
+    @State private var termsAndConditions = ""
+    @State private var contact = ""
+    @State private var feedback = ""
+    @State private var logout = ""
     var body: some View {
         VStack {
-            Text("Settings Screen")
-                .font(.largeTitle)
-                .bold()
-            Spacer()
+            NavigationStack {
+               
+                
+                HStack {
+                    
+                    Form {
+                        HStack {
+                            Image(systemName: "bell")
+                            Toggle("Notifications", isOn: $notification)
+                            
+                        }
+                        HStack {
+                            NavigationLink(destination: PrivacyPolicy()) {
+                                
+                                Image(systemName: "lock")
+                                Text("Privacy Policy")
+                                
+                                
+                            }
+                        }
+                        HStack {
+                            NavigationLink(destination: PrivacyPolicy()) {
+                                
+                                Image(systemName: "book")
+                                Text("Terms and Conditions")
+                                
+                                
+                            }
+                        }
+                        HStack {
+                            NavigationLink(destination: Contact()) {
+                                
+                                Image(systemName: "envelope")
+                                Text("Contact")
+                                
+                                
+                            }
+                        }
+                        HStack {
+                            NavigationLink(destination: Contact()) {
+                                
+                                Image(systemName: "message")
+                                Text("Feedback")
+                                
+                                
+                            }
+                        }
+                        Section {
+                            HStack {
+                                NavigationLink(destination: ContentView()) {
+                                    
+                                    Image(systemName: "rectangle.portrait.and.arrow.forward")
+                                    Text("Logout")
+                                    
+                                    
+                                }
+                                
+                            }
+                            
+                        }
+                
+                    }
+                    .navigationTitle(Text("Settings"))
+                }
+                
+            }
         }
-        .padding()
+      
     }
 }
  
