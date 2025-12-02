@@ -43,6 +43,11 @@ struct ContentView: View {
 //                    .ignoresSafeArea(edges: .all)
                 ZStack {
                     
+                    Rectangle()
+                        .frame(width: 800, height: 800)
+                        .foregroundColor(.white3)
+                        .ignoresSafeArea(edges: .all)
+                        .position(x: 200, y: 0)
                     Image("TGCLogo")
                         .resizable()
                         

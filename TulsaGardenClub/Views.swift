@@ -49,7 +49,7 @@ struct HomeView: View {
                         
                         .position(x: 200, y:-100)
                         
-                        .navigationTitle(Text("Home"))
+                        .navigationTitle(Text("Welcome"))
                     }
             }
                 .navigationBarBackButtonHidden(true)
@@ -117,7 +117,7 @@ struct SettingView: View {
                             }
                         }
                         HStack {
-                            NavigationLink(destination: Contact()) {
+                            NavigationLink(destination: Feedback()) {
                                 
                                 Image(systemName: "message")
                                 Text("Feedback")
@@ -187,7 +187,7 @@ struct Views: View {
                     SettingView()
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(width: 402, height: 700)
             .background(Color(.systemBackground))
             
             // Minimal Modern Tab Bar
