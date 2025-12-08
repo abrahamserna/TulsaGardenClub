@@ -62,7 +62,8 @@ import SwiftUI
 import FirebaseDatabase
  
 struct ExhibtorEntryView: View {
-    
+    @State private var showAlert = false
+    @State private var navigateToViews = false
    @State var exhibitor: String = ""
    @State var address: String = ""
    @State var club: String = ""
@@ -188,6 +189,27 @@ struct ExhibtorEntryView: View {
                 .scrollContentBackground(.hidden)
                 
               
+            VStack {
+                
+             
+                Button {
+                    showAlert = true
+                } label: {
+                    Label("Cancel", systemImage: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(width: 200, height: 50)
+                        .background(Color.red)
+                        .cornerRadius(15)
+                }
+                .alert("Are you sure you want to cancel?", isPresented: $showAlert) {
+                    Button("Yes", role: .destructive) {
+                        navigateToViews = true
+                    }
+                    Button("No", role: .cancel) { }
+                }
+                
                 
                 Button {
                     
@@ -209,7 +231,7 @@ struct ExhibtorEntryView: View {
                     
                     NavigationLink(destination: Views()) {
                         Text("Finalize")
-                            .frame(width: 300, height: 30)
+                            .frame(width: 170, height: 30)
                             .font(.title2.bold())
                             .foregroundStyle(.white)
                         
@@ -221,19 +243,11 @@ struct ExhibtorEntryView: View {
                     
                     
                 }
-                
+                .padding()
+            }
             }
         
-//        .background(Color.lightgreen)
-//        NavigationLink(destination: Views()) {
-//            Text("Home")
-//                .font(.headline)
-//                .padding()
-//                .background(Color.orange)
-//                .foregroundColor(.white)
-//                .cornerRadius(10)
-//            
-//        }
+
       
         }
         
