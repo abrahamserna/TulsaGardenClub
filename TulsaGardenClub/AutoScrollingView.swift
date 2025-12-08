@@ -27,7 +27,7 @@ struct AutoScrollingView: View {
                         .tag(index)
                 }
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             .onAppear {
                 startTimer()
             }

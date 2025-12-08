@@ -26,7 +26,7 @@ struct TulsaGardenClubApp: App {
     var body: some Scene {
       WindowGroup {
         NavigationView {
-          ContentView()
+         SplashScreenView()
         }
       }
     }

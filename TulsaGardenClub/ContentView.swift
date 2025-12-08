@@ -24,149 +24,129 @@
 //}
 
 import SwiftUI
-
 import Firebase
 import FirebaseAuth
 
 struct ContentView: View {
+    @State private var email: String = ""
+    @State private var password: String = ""
     
-    @State var email: String = ""
-    @State var password: String = ""
+    @State private var showViews = false
+    @State private var errorMessage: String?
     
-    @State var showNewAccount = false
-    @State var showResetPassword = false
-    @State var showViews = false
     var body: some View {
         NavigationStack {
             ZStack {
-//                Color(.blue.opacity(0.1))
-//                    .ignoresSafeArea(edges: .all)
-                ZStack {
-                    
-                    Rectangle()
-                        .frame(width: 800, height: 800)
-                        .foregroundColor(.white3)
-                        .ignoresSafeArea(edges: .all)
-                        .position(x: 200, y: 0)
-                    Image("TGCLogo")
+                Color.white2.edgesIgnoringSafeArea(.all)
+                VStack(spacing: 25) {
+                    Image("LogoDark")
                         .resizable()
-                        
+                        .frame(width: 100, height: 80)
+                        .padding(.top, 20)
                     
-                        .frame(width: 140, height: 120)
-                        .position(x: 360, y: -100)
-                    Circle()
-                        .fill(Color.darkgreen.opacity(0.9))
-                        .frame(width: 720, height: 720)
-                    Circle()
-                        .fill(Color.mediumgreen)
-                        .frame(width: 660, height: 660)
-                    Circle()
-                        .fill(Color.lightgreen)
-                        .frame(width: 600, height: 600)
-                    
-                    
-                    
-                }
-                .position(x: 200, y: 600)
-                VStack {
-                   
-                      
-                    
-                   
-                    VStack(spacing: 20) {
-                        TextField("Email", text: $email, prompt: Text("Enter email..."))
-                            .frame(width: 270)
-                            .padding(8)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.mediumgreen.opacity(0.7), lineWidth: 3))
+                    VStack(alignment: .leading) {
+                        Text("Welcome to")
                             .font(.title2)
-                            .textFieldStyle(.plain)
-                        
-                            .autocapitalization(.none)
-                        SecureField("Password", text: $password, prompt: Text("Enter password..."))
-                            .frame(width: 270)
-                            .padding(8)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.mediumgreen.opacity(0.7), lineWidth: 3))
-                            .font(.title2)
-                            .textFieldStyle(.plain)
+                        Text("Tulsa Garden Club")
+                            .font(.title)
                     }
-                    .position(x: 185, y: 420)
-                    .padding()
+                    .padding(.bottom, 60)
+                    
                     VStack(spacing: 16) {
-                        Button {
-                            loginUser()
-                        } label: {
-                            Text("LOGIN")
-                                .frame(width: 240)
-                                .font(.title2.bold())
-                                .padding()
-                                .foregroundColor(.lightgreen)
-                                .background(Color.darkgreen)
-                                .cornerRadius(10)
-                        }
-                        .position(x: 185, y: 160)
-                       
+                        TextField("Email", text: $email)
+                            .textInputAutocapitalization(.never)
+                            .frame(width: 270)
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(errorMessage != nil ? Color.red : Color.mediumgreen.opacity(0.7), lineWidth: 2)
+                            )
+                            .font(.title2)
                         
-//                        Button {
-//                            
-//                            showNewAccount.toggle()
-//                        } label: {
-//                            Text("Creat Account")
-//                                .frame(maxWidth: .infinity)
-//                                .font(.title2.bold())
-//                                .padding()
-//                                .foregroundColor(.white)
-//                                .background(Color.red.opacity(0.6))
-//                                .cornerRadius(16)
-//                            
-//                                .navigationDestination(isPresented: $showNewAccount) {
-//                                    NewAccountView()
-//                                }
-//                      
-//                        }
-                        
+                        SecureField("Password", text: $password)
+                            .frame(width: 270)
+                            .padding(5)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(errorMessage != nil ? Color.red : Color.mediumgreen.opacity(0.7), lineWidth: 2)
+                            )
+                            .font(.title2)
                     }
                     
-                    .padding()
+                    // Normal login button
+                    Button {
+                        loginUser()
+                        
+                    } label: {
+                        Text("LOGIN")
+                        
+                            .frame(width: 100, height: 15)
+                            .font(.title2.bold())
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.darkgreen)
+                            .cornerRadius(10)
+                    }
+                    
+                    // Error message
+                    if let errorMessage = errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .padding(.top, 8)
+                    }
                     
                     Spacer()
-//                    Button {
-//                        showResetPassword = true
-//                    } label: {
-//                        Text("Forgot Password?")
-//                            .frame(maxWidth: .infinity)
-//                            .font(.title3)
-//                            .foregroundColor(Color.black)
-//                        
-//                            .navigationDestination(isPresented: $showResetPassword) {
-//                                ResetPassword()
-//                            }
-//                    }
-                    
                 }
-          
+                .padding()
+                
+                // Admin button anchored bottom-left
+                VStack {
+                    Spacer()
+                    HStack {
+                        Button {
+                            skipLoginForAdmin()
+                        } label: {
+                            HStack {
+                                Image(systemName: "lock.circle.dotted")
+                                Text("Admin")
+                                    .bold()
+                            }
+                            .padding(10)
+                            .foregroundColor(.white)
+                            .background(Color.red)
+                            .cornerRadius(8)
+                            .shadow(radius: 4)
+                        }
+                        Spacer()
+                    }
+                    .padding(.leading, 20)
+                    .padding(.bottom, 20)
+                }
             }
-            
-//            .navigationTitle(Text("Login Page"))
             .navigationDestination(isPresented: $showViews) {
                 Views()
             }
         }
-        
-        }
+    }
     
     private func loginUser() {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let err = error {
-                print("Error: \(err.localizedDescription)")
+            if error != nil {
+                errorMessage = "Incorrect email or password"
                 return
             }
-          print("Logged in")
-            
+            errorMessage = nil
             showViews = true
         }
     }
+    
+    private func skipLoginForAdmin() {
+        // Bypass login for testing
+        errorMessage = nil
+        showViews = true
     }
-
+}
 
 #Preview {
     ContentView()

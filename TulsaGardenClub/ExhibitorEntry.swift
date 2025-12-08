@@ -84,7 +84,7 @@ struct ExhibtorEntryView: View {
         VStack {
          
                 Form {
-                    Section(header: Text("Exhibitor Info")) {
+                    Section(header: Text("Exhibitor Info").foregroundColor(.whiteText)) {
                         TextField("First Name", text: $exhibitorFirstName)
                         
                         TextField("Last Name", text: $exhibitorLastName)
@@ -95,7 +95,7 @@ struct ExhibtorEntryView: View {
                         
                     }
                     
-                    Section(header: Text("Exhibit Information")) {
+                    Section(header: Text("Exhibit Information").foregroundColor(.whiteText)) {
                         
                         Picker("Division", selection: $exhibitorDivision)
                         {
@@ -108,7 +108,7 @@ struct ExhibtorEntryView: View {
                             
                             
                         }
-                        
+                        .foregroundColor(.secondaryText)
                         Picker("Section", selection: $exhibitorSection){
                             Text("A").tag("Section A")
                             Text("B").tag("Section B")
@@ -137,7 +137,7 @@ struct ExhibtorEntryView: View {
                             Text("Y").tag("Section Y")
                             Text("Z").tag("Section Z")
                         }
-                        
+                        .foregroundColor(.secondaryText)
                         Picker("Class", selection: $exhibitorClass)
                         {
                             Text("A").tag("Section A")
@@ -167,8 +167,7 @@ struct ExhibtorEntryView: View {
                             Text("Y").tag("Section Y")
                             Text("Z").tag("Section Z")
                         }
-             
-                           
+                        .foregroundColor(.secondaryText)
                             
                             
                         }
@@ -179,16 +178,16 @@ struct ExhibtorEntryView: View {
                         Text("3rd(2 Points)").tag("3rd(2 Points)")
                         Text("Honorable Mention(1 Point)").tag("Honorable Mention(1 Point)")
                     }
-                    
+                    .foregroundColor(.secondaryText)
                    
                     
                     
                 }
                 .foregroundColor(.black)
-                .background(Color.lightgreen)
+                .background(Color.white2)
                 .scrollContentBackground(.hidden)
                 
-//                .navigationBarBackButtonHidden(true)
+              
                 
                 Button {
                     
@@ -210,14 +209,14 @@ struct ExhibtorEntryView: View {
                     
                     NavigationLink(destination: Views()) {
                         Text("Finalize")
-                            .frame(width: 90, height: 30)
+                            .frame(width: 300, height: 30)
                             .font(.title2.bold())
                             .foregroundStyle(.white)
                         
                     }
                     .padding()
                     .background(Color.darkgreen)
-                    
+                    .navigationBarBackButtonHidden(true)
                     .cornerRadius(16)
                     
                     

@@ -53,7 +53,7 @@ struct Sweepstakes: View {
                     // Use this style for the classic rolling picker
                     
                 }
-                Section(header: Text("Exhibit #                                            Exhibit Points")) {
+                Section(header: Text("Exhibit #                             Exhibit Points")) {
                     HStack {
                         TextField("Exhibit #", text: $numberOfExhibits1)
                         Picker("Points", selection: $selection1) {
@@ -93,6 +93,28 @@ struct Sweepstakes: View {
                     
                 }
             }
+            
+            Button {
+                
+              
+                
+            } label: {
+                
+                NavigationLink(destination: Views()) {
+                    Text("Finalize")
+                        .frame(width: 300, height: 30)
+                        .font(.title2.bold())
+                        .foregroundStyle(.white)
+                    
+                }
+                .padding()
+                .background(Color.darkgreen)
+                .navigationBarBackButtonHidden(true)
+                .cornerRadius(16)
+                
+                
+            }
+            .scrollContentBackground(.hidden)
             .navigationBarTitle("Sweepstakes")
         }
     }

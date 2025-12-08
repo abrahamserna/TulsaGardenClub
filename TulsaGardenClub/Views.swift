@@ -20,12 +20,16 @@ struct HomeView: View {
                         VStack(alignment: .leading) {
                             Text("Welcome")
                                 .font(.title2)
-                            Text("John Appleseed")
-                                .font(.title)
+                                .foregroundStyle(.primary)
+                            Text("Abraham Serna")
+                                .font(.largeTitle)
                                 .bold()
+                                .foregroundStyle(.primary)
                             Text("Tulsa Garden Club")
-                                .font(.caption)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
                         }
+                        
                         .position(x: 150, y: 50)
                         
                         VStack {
@@ -48,11 +52,14 @@ struct HomeView: View {
                                     .position(x: 40, y: 40)
                                     VStack(alignment: .leading) {
                                         Text("Exhibitor Entry")
+                                            .foregroundColor(.whiteText)
                                             .font(.title2)
+                                        
                                         Text("Enter Information Here")
                                             .font(.caption)
-                                        
+                                            .foregroundColor(.whiteText)
                                     }
+                                    
                                     .position(x: 0, y: 40)
                                 }
                                     .frame(width: 300, height: 80)
@@ -72,7 +79,7 @@ struct HomeView: View {
                                             .frame(width: 50, height: 50)
                                             .cornerRadius(10)
                                         
-                                        Image(systemName: "figure.stand")
+                                        Image(systemName: "apple.meditate.circle")
                                             .foregroundColor(.white2)
                                             .font(.system(size: 30))
                                             
@@ -80,10 +87,11 @@ struct HomeView: View {
                                     .position(x: 40, y: 40)
                                     VStack(alignment: .leading) {
                                         Text("Sweepstakes")
+                                            .foregroundColor(.whiteText)
                                             .font(.title2)
                                         Text("Enter Information Here")
                                             .font(.caption)
-                                        
+                                            .foregroundColor(.whiteText)
                                     }
                                     .position(x: 0, y: 40)
                                 }
@@ -105,8 +113,9 @@ struct HomeView: View {
                    
                     }
             }
-                .navigationBarBackButtonHidden(true)
+       
         }
+            .navigationBarBackButtonHidden(true)
     }
 }
  
@@ -118,6 +127,7 @@ struct ProfileView: View {
                 .bold()
             Spacer()
         }
+        .navigationBarBackButtonHidden(true)
         .padding()
     }
 }
@@ -129,10 +139,14 @@ struct SettingView: View {
     @State private var contact = ""
     @State private var feedback = ""
     @State private var logout = ""
+    
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = true
     var body: some View {
         VStack {
+            
             ZStack {
-                NavigationStack {
+                
+   
                     
                     
                     HStack {
@@ -198,17 +212,18 @@ struct SettingView: View {
                         
                     }
                     
-                }
-                Image("TGCLogo").resizable()
-                    .opacity(0.2)
+                
+                Image("LogoDark").resizable()
+                    .opacity(0.7)
                 
                     .frame(width: 100, height: 90)
                     .position(x: 200, y: 600)
+                    
             }
             
             
         }
-      
+        .navigationBarBackButtonHidden(true)
     }
 }
  
@@ -235,7 +250,7 @@ struct Views: View {
             }
         }
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
             
@@ -250,8 +265,9 @@ struct Views: View {
                     SettingView()
                 }
             }
-            .frame(width: 402, height: 700)
-            .background(Color(.systemBackground))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .cornerRadius(0)
+            .background(Color(.white2))
             
             // Minimal Modern Tab Bar
             HStack {
@@ -277,18 +293,20 @@ struct Views: View {
                             
                             Text(tab.title)
                                 .font(.caption)
-                                .foregroundColor(selectedTab == tab ? .primary : .gray)
+                                .foregroundColor(selectedTab == tab ? .primary : .whiteText)
                         }
                         .frame(maxWidth: .infinity)
+                        
                     }
                 }
             }
             .padding(.horizontal, 24)
             .padding(.top, 8)
             .padding(.bottom, 12)
-            .background(.white)
+            .foregroundColor(.whiteText)
             
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

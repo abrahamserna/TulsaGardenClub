@@ -21,7 +21,7 @@ struct SplashScreenView: View {
         } else {
             
             VStack {
-                Image("ClubLogo")
+                Image("Logodark")
                     .resizable()
                     .frame(width: 200, height: 200)
                    
