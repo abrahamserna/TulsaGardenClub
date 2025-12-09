@@ -8,254 +8,151 @@
 import SwiftUI
 import FirebaseDatabase
 import Firebase
-struct Exhibtor: Codable, Identifiable {
+struct Exhibitor: Codable, Identifiable {
     var id = UUID().uuidString
-    var firstName: String
-    var lastName: String
-    var address: String
-    var club: String
-    var division: String
-    var section: String
-    var Class: String
-    var placement: String
+    var firstName: String = ""
+    var lastName: String = ""
+    var address: String = ""
+    var club: String = ""
+    var division: String = ""
+    var section: String = ""
+    var exhibitorClass: String = ""
+    var placement: String = ""
 }
+
  
 class FirebaseManager {
-    
     private let ref = Database.database().reference()
     
-    func addExhibitor(
+    func addExhibitor(_ exhibitor: Exhibitor) {
+        // Build a readable key using first + last name
+        let safeFirst = exhibitor.firstName.replacingOccurrences(of: " ", with: "_")
+        let safeLast = exhibitor.lastName.replacingOccurrences(of: " ", with: "_")
+        let key = "\(safeFirst)_\(safeLast)_\(UUID().uuidString.prefix(6))"
+
         
-        exhibitorFirstName: String,
-        exhibitorLastName: String,
-        exhibitorAddress: String,
-        exhibitorClub: String,
-        exhibitorDivision: String,
-        exhibitorSection: String,
-        exhibitorClass: String,
-        exhibitorPlacement: String
+        let exhibitorRef = ref.child("Exhibitors").child(key)
         
-    ) {
-        
-        let exhibitorRef = ref.child("Exhibitors").childByAutoId()
-        
-        let exhibitorData: [String: Any] = [
-            
-            "ExhibitorFirstName": exhibitorFirstName,
-            "ExhibitorLastName": exhibitorLastName,
-            "ExhibitorAddress": exhibitorAddress,
-            "ExhibitorClub": exhibitorClub,
-            "ExhibitorDivision": exhibitorDivision,
-            "ExhibitorSection": exhibitorSection,
-            "ExhibitorClass": exhibitorClass,
-            "ExhibitorPlacement": exhibitorPlacement
-        ]
-        
-        exhibitorRef.setValue(exhibitorData)
-        
+        do {
+            let data = try JSONEncoder().encode(exhibitor)
+            let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            exhibitorRef.setValue(dict)
+        } catch {
+            print("Error encoding exhibitor: \(error)")
+        }
     }
-    
-    
 }
+
  
 import SwiftUI
 import FirebaseDatabase
  
-struct ExhibtorEntryView: View {
+struct ExhibitorEntryView: View {
+    @State private var exhibitor = Exhibitor()
     @State private var showAlert = false
+    @State private var alertMessage = ""
     @State private var navigateToViews = false
-   @State var exhibitor: String = ""
-   @State var address: String = ""
-   @State var club: String = ""
-    
-    @State private var exhibitorFirstName = ""
-    @State private var exhibitorLastName = ""
-    @State private var exhibitorDivision = ""
-    @State private var exhibitorSection = ""
-    @State private var exhibitorClass = ""
-    @State private var exhibitorAddress = ""
-    @State private var exhibitorPlacement = ""
-    @State private var exhibitorClub = ""
-    
-
     
     let firebaseManager = FirebaseManager()
     
     var body: some View {
         VStack {
-         
-                Form {
-                    Section(header: Text("Exhibitor Info").foregroundColor(.whiteText)) {
-                        TextField("First Name", text: $exhibitorFirstName)
-                        
-                        TextField("Last Name", text: $exhibitorLastName)
-                        
-                        TextField("Address", text: $exhibitorAddress)
-                        
-                        TextField("Club", text: $exhibitorClub)
-                        
-                    }
-                    
-                    Section(header: Text("Exhibit Information").foregroundColor(.whiteText)) {
-                        
-                        Picker("Division", selection: $exhibitorDivision)
-                        {
-                            Text("I").tag("Division 1")
-                            Text("II").tag("Division 2")
-                            Text("III").tag("Division 3")
-                            Text("IV").tag("Division 4")
-                            Text("V").tag("Division 5")
-                            Text("VI").tag("Division 6")
-                            
-                            
-                        }
-                        .foregroundColor(.secondaryText)
-                        Picker("Section", selection: $exhibitorSection){
-                            Text("A").tag("Section A")
-                            Text("B").tag("Section B")
-                            Text("C").tag("Section C")
-                            Text("D").tag("Section D")
-                            Text("E").tag("Section E")
-                            Text("F").tag("Section F")
-                            Text("G").tag("Section G")
-                            Text("H").tag("Section H")
-                            Text("I").tag("Section I")
-                            Text("J").tag("Section J")
-                            Text("K").tag("Section K")
-                            Text("L").tag("Section L")
-                            Text("M").tag("Section M")
-                            Text("N").tag("Section N")
-                            Text("O").tag("Section O")
-                            Text("P").tag("Section P")
-                            Text("Q").tag("Section Q")
-                            Text("R").tag("Section R")
-                            Text("S").tag("Section S")
-                            Text("T").tag("Section T")
-                            Text("U").tag("Section U")
-                            Text("V").tag("Section V")
-                            Text("W").tag("Section W")
-                            Text("X").tag("Section X")
-                            Text("Y").tag("Section Y")
-                            Text("Z").tag("Section Z")
-                        }
-                        .foregroundColor(.secondaryText)
-                        Picker("Class", selection: $exhibitorClass)
-                        {
-                            Text("A").tag("Section A")
-                            Text("B").tag("Section B")
-                            Text("C").tag("Section C")
-                            Text("D").tag("Section D")
-                            Text("E").tag("Section E")
-                            Text("F").tag("Section F")
-                            Text("G").tag("Section G")
-                            Text("H").tag("Section H")
-                            Text("I").tag("Section I")
-                            Text("J").tag("Section J")
-                            Text("K").tag("Section K")
-                            Text("L").tag("Section L")
-                            Text("M").tag("Section M")
-                            Text("N").tag("Section N")
-                            Text("O").tag("Section O")
-                            Text("P").tag("Section P")
-                            Text("Q").tag("Section Q")
-                            Text("R").tag("Section R")
-                            Text("S").tag("Section S")
-                            Text("T").tag("Section T")
-                            Text("U").tag("Section U")
-                            Text("V").tag("Section V")
-                            Text("W").tag("Section W")
-                            Text("X").tag("Section X")
-                            Text("Y").tag("Section Y")
-                            Text("Z").tag("Section Z")
-                        }
-                        .foregroundColor(.secondaryText)
-                            
-                            
-                        }
-                    
-                    Picker("Placement", selection: $exhibitorPlacement){
-                        Text("1st(4 Points)").tag("1st(4 Points)")
-                        Text("2nd(3 Points)").tag("2nd(3 Points)")
-                        Text("3rd(2 Points)").tag("3rd(2 Points)")
-                        Text("Honorable Mention(1 Point)").tag("Honorable Mention(1 Point)")
-                    }
-                    .foregroundColor(.secondaryText)
-                   
-                    
-                    
+            Form {
+                Section(header: Text("Exhibitor Info")) {
+                    TextField("First Name", text: $exhibitor.firstName)
+                    TextField("Last Name", text: $exhibitor.lastName)
+                    TextField("Address", text: $exhibitor.address)
+                    TextField("Club", text: $exhibitor.club)
                 }
-                .foregroundColor(.black)
-                .background(Color.white2)
-                .scrollContentBackground(.hidden)
                 
-              
-            VStack {
-                
-             
-                Button {
+                Section(header: Text("Exhibit Information")) {
+                    Picker("Division", selection: $exhibitor.division) {
+                        Text("I").tag("Division 1")
+                        Text("II").tag("Division 2")
+                        Text("III").tag("Division 3")
+                        Text("IV").tag("Division 4")
+                        Text("V").tag("Division 5")
+                        Text("VI").tag("Division 6")
+                    }
+                    
+                    Picker("Section", selection: $exhibitor.section) {
+                        ForEach(["A","B","C","D","E","F","G","H","I","J","K","L",
+                                 "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"], id: \.self) {
+                            Text($0).tag("Section \($0)")
+                        }
+                    }
+                    
+                    Picker("Class", selection: $exhibitor.exhibitorClass) {
+                        ForEach(["A","B","C","D","E","F","G","H","I","J","K","L",
+                                 "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"], id: \.self) {
+                            Text($0).tag("Class \($0)")
+                        }
+                    }
+                    
+                    Picker("Placement", selection: $exhibitor.placement) {
+                        Text("1st (4 Points)").tag("1st(4 Points)")
+                        Text("2nd (3 Points)").tag("2nd(3 Points)")
+                        Text("3rd (2 Points)").tag("3rd(2 Points)")
+                        Text("Honorable Mention (1 Point)").tag("Honorable Mention(1 Point)")
+                    }
+                }
+            }
+            
+            Button("Finalize") {
+                if validateExhibitor() {
+                    firebaseManager.addExhibitor(exhibitor)
+                    navigateToViews = true
+                } else {
                     showAlert = true
-                } label: {
-                    Label("Cancel", systemImage: "xmark.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 200, height: 50)
-                        .background(Color.red)
-                        .cornerRadius(15)
                 }
-                .alert("Are you sure you want to cancel?", isPresented: $showAlert) {
-                    Button("Yes", role: .destructive) {
-                        navigateToViews = true
-                    }
-                    Button("No", role: .cancel) { }
-                }
-                
-                
-                Button {
-                    
-                    firebaseManager.addExhibitor (
-                        
-                        exhibitorFirstName: exhibitorFirstName,
-                        exhibitorLastName: exhibitorLastName,
-                        exhibitorAddress: exhibitorAddress,
-                        exhibitorClub: exhibitorClub,
-                        exhibitorDivision: exhibitorDivision,
-                        exhibitorSection: exhibitorSection,
-                        exhibitorClass: exhibitorClass,
-                        exhibitorPlacement: exhibitorPlacement
-                        
-                        
-                    )
-                    
-                } label: {
-                    
-                    NavigationLink(destination: Views()) {
-                        Text("Finalize")
-                            .frame(width: 170, height: 30)
-                            .font(.title2.bold())
-                            .foregroundStyle(.white)
-                        
-                    }
-                    .padding()
-                    .background(Color.darkgreen)
-                    .navigationBarBackButtonHidden(true)
-                    .cornerRadius(16)
-                    
-                    
-                }
-                .padding()
             }
+            .padding()
+            .background(Color.green)
+            .cornerRadius(16)
+            .foregroundColor(.white)
+            
+            NavigationLink(destination: Views(), isActive: $navigateToViews) {
+                EmptyView()
             }
-        
-
-      
         }
-        
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Validation Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
+    
+    private func validateExhibitor() -> Bool {
+        if exhibitor.firstName.isEmpty {
+            alertMessage = "First name is required."
+            return false
+        }
+        if exhibitor.lastName.isEmpty {
+            alertMessage = "Last name is required."
+            return false
+        }
+        if exhibitor.division.isEmpty {
+            alertMessage = "Division must be selected."
+            return false
+        }
+        if exhibitor.section.isEmpty {
+            alertMessage = "Section must be selected."
+            return false
+        }
+        if exhibitor.exhibitorClass.isEmpty {
+            alertMessage = "Class must be selected."
+            return false
+        }
+        if exhibitor.placement.isEmpty {
+            alertMessage = "Placement must be selected."
+            return false
+        }
+        return true
+    }
+}
+
     
 
  
 
 #Preview {
-    ExhibtorEntryView()
+    ExhibitorEntryView()
 }

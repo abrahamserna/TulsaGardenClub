@@ -37,7 +37,7 @@ struct HomeView: View {
                                 .position(x: 200, y: 350)
                             
                             
-                            NavigationLink(destination: ExhibtorEntryView()) {
+                            NavigationLink(destination: ExhibitorEntryView()) {
                                 HStack(alignment: .center) {
                                     ZStack {
                                         Color.green
