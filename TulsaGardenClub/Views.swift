@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
- 
+ import Firebase
+
 struct HomeView: View {
     var body: some View {
         @State var showExhibitorEntry = false
@@ -119,18 +120,71 @@ struct HomeView: View {
     }
 }
  
+
+
 struct ProfileView: View {
+    @State private var exhibitors: [Exhibitor] = []
+    @State private var isLoading = true
+    @State private var showDeleteAlert = false
+    @State private var exhibitorToDelete: Exhibitor?
+
+    
+    let firebaseManager = FirebaseManager()
+    
     var body: some View {
-        VStack {
-            Text("Profile Screen")
-                .font(.largeTitle)
-                .bold()
-            Spacer()
+        NavigationStack {
+            List {
+                Section(header: Text("Entries")) {
+                    if isLoading {
+                        ProgressView("Loading entries...")
+                    } else if exhibitors.isEmpty {
+                        Text("No entries found")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(exhibitors) { exhibitor in
+                            VStack(alignment: .leading) {
+                                Text("\(exhibitor.firstName) \(exhibitor.lastName)")
+                                    .font(.headline)
+                                Text("Division: \(exhibitor.division) | Placement: \(exhibitor.placement)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+                
+               
+                Section(header: Text("Admin Tools")) {
+                    Button("Export Report") {
+                        // TODO: implement export logic
+                    }
+                    Button("Manage Templates") {
+                        // TODO: show template view
+                    }
+                }
+            }
+            .navigationTitle("Admin Dashboard")
+            .onAppear {
+                // 🔴 Attach listeners
+                firebaseManager.listenForNewExhibitors { newExhibitor in
+                    exhibitors.append(newExhibitor)
+                    isLoading = false
+                }
+                
+                firebaseManager.listenForChangedExhibitors { updatedExhibitor in
+                    if let index = exhibitors.firstIndex(where: { $0.id == updatedExhibitor.id }) {
+                        exhibitors[index] = updatedExhibitor
+                    }
+                }
+                
+                firebaseManager.listenForRemovedExhibitors { removedKey in
+                    exhibitors.removeAll { $0.id == removedKey }
+                }
+            }
         }
-        .navigationBarBackButtonHidden(true)
-        .padding()
     }
 }
+
  
 struct SettingView: View {
     @State private var notification = false
