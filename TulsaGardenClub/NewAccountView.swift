@@ -1,113 +1,43 @@
+////
+////  NewAccountView.swift
+////  TulsaGardenClub
+////
+////  Created by AM Student on 11/10/25.
+////
 //
-//  NewAccountView.swift
-//  TulsaGardenClub
+//import FirebaseAuth
+//import FirebaseFirestoreSwift
 //
-//  Created by AM Student on 11/10/25.
+//class FirebaseManager {
+//    private let db = Firestore.firestore()
+//    
+//    func createAdminAccount(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+//        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+//            if let error = error {
+//                completion(.failure(error))
+//                return
+//            }
+//            
+//            guard let uid = authResult?.user.uid else {
+//                completion(.failure(NSError(domain: "Firebase", code: -1, userInfo: [NSLocalizedDescriptionKey: "Missing UID"])))
+//                return
+//            }
+//            
+//            let adminUser = AdminUser(id: uid, email: email, role: "admin")
+//            
+//            do {
+//                try self.db.collection("users").document(uid).setData(from: adminUser)
+//                completion(.success(()))
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+//}
 //
-
-import SwiftUI
-import Firebase
-import FirebaseAuth
-
-struct NewAccountView: View {
-    
-    
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var passwordVerification: String = ""
-    
-    @State var showContentView = false
-    
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-      
-     
-        NavigationView {
-            
-            NavigationStack {
-                ZStack {
-                    Color(.white)
-                        .ignoresSafeArea(edges: .all)
-                    
-                    VStack {
-                        
-                        VStack(spacing: 20) {
-                            TextField("Email", text: $email, prompt: Text("Enter email..."))
-                                .font(.title2)
-                                .textFieldStyle(.roundedBorder)
-                                .autocapitalization(.none)
-                            
-                            SecureField("Password", text: $password, prompt: Text("Enter password..."))
-                                .font(.title2)
-                                .textFieldStyle(.roundedBorder)
-                            
-                            SecureField("Verify Password", text: $passwordVerification, prompt: Text("Verify password..."))
-                                .font(.title2)
-                                .textFieldStyle(.roundedBorder)
-                        }
-                        .padding()
-                        VStack(spacing: 16) {
-                            Button {
-                                createNewUser()
-                            } label: {
-                                Text("Creat Account")
-                                    .frame(maxWidth: .infinity)
-                                    .font(.title2.bold())
-                            }
-                            .padding()
-                            .foregroundColor(.white)
-                            .background(Color.green2)
-                            .cornerRadius(16)
-                        }
-                        
-                        .padding()
-                        
-                        Spacer()
-                        
-                        Button {
-                            showContentView.toggle()
-                            dismiss()
-                        } label: {
-                            Text("Already have an account? Login")
-                                .frame(maxWidth: .infinity)
-                                .font(.title3)
-                                .foregroundColor(Color.black)
-                        }
-                            
-                    }
-                }
-                
-                .navigationTitle(Text("Create new account"))
-            }
-        }
-            }
-    
-    private func createNewUser() {
-        if password != passwordVerification {
-            
-        }
-        
-        if password.isEmpty {
-            return
-        }
-        
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let err = error {
-                print("Error \(err.localizedDescription)")
-                return
-            }
-            
-            print("Successfully registered user.")
-            
-            
-                dismiss()
-            
-        }
-    }
-    }
-
-
-#Preview {
-    NewAccountView()
-}
+//struct AdminUser: Identifiable, Codable {
+//    var id: String        // Firebase UID
+//    var email: String
+//    var role: String = "admin"
+//}
+//

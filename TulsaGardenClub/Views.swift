@@ -183,103 +183,83 @@ struct ProfileView: View {
             }
         }
     }
+    
 }
 
  
+import SwiftUI
+
 struct SettingView: View {
     @State private var notification = false
-    @State private var privacyPolicy = ""
-    @State private var termsAndConditions = ""
-    @State private var contact = ""
-    @State private var feedback = ""
-    @State private var logout = ""
-    
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = true
+    
     var body: some View {
-        VStack {
-            
-            ZStack {
-                
-   
-                    
-                    
-                    HStack {
-                        
-                        Form {
-                            HStack {
-                                Image(systemName: "bell")
-                                Toggle("Notifications", isOn: $notification)
-                                
-                            }
-                            HStack {
-                                NavigationLink(destination: PrivacyPolicy()) {
-                                    
-                                    Image(systemName: "lock")
-                                    Text("Privacy Policy")
-                                    
-                                    
-                                }
-                            }
-                            HStack {
-                                NavigationLink(destination: PrivacyPolicy()) {
-                                    
-                                    Image(systemName: "book")
-                                    Text("Terms and Conditions")
-                                    
-                                    
-                                }
-                            }
-                            HStack {
-                                NavigationLink(destination: Contact()) {
-                                    
-                                    Image(systemName: "envelope")
-                                    Text("Contact")
-                                    
-                                    
-                                }
-                            }
-                            HStack {
-                                NavigationLink(destination: Feedback()) {
-                                    
-                                    Image(systemName: "message")
-                                    Text("Feedback")
-                                    
-                                    
-                                }
-                            }
-                            Section {
-                                HStack {
-                                    NavigationLink(destination: ContentView()) {
-                                        
-                                        Image(systemName: "rectangle.portrait.and.arrow.forward")
-                                        Text("Logout")
-                                        
-                                        
-                                    }
-                                    
-                                }
-                                
-                            }
-                            
+        NavigationStack {
+            Form {
+                Section {
+                    Toggle(isOn: $notification) {
+                        HStack {
+                            Image(systemName: "bell")
+                            Text("Notifications")
                         }
-                        .navigationTitle(Text("Settings"))
-                        
+                    }
+                }
+                
+                Section {
+                    NavigationLink(destination: PrivacyPolicy()) {
+                        HStack {
+                            Image(systemName: "lock")
+                            Text("Privacy Policy")
+                        }
                     }
                     
-                
-                Image("LogoDark").resizable()
-                    .opacity(0.7)
-                
-                    .frame(width: 100, height: 90)
-                    .position(x: 200, y: 600)
+                    NavigationLink(destination: TermsandConditions()) {
+                        HStack {
+                            Image(systemName: "book")
+                            Text("Terms and Conditions")
+                        }
+                    }
                     
+                    NavigationLink(destination: Contact()) {
+                        HStack {
+                            Image(systemName: "envelope")
+                            Text("Contact")
+                        }
+                    }
+                    
+                    NavigationLink(destination: Feedback()) {
+                        HStack {
+                            Image(systemName: "message")
+                            Text("Feedback")
+                        }
+                    }
+                }
+                
+                Section {
+                    Button {
+                        isLoggedIn = false   // 🔴 actually logs out
+                    } label: {
+                        HStack {
+                            Image(systemName: "rectangle.portrait.and.arrow.forward")
+                            Text("Logout")
+                                .foregroundColor(.red)
+                        }
+                    }
+                }
             }
-            
-            
+            .navigationTitle("Settings")
+            .overlay(
+                Image("LogoDark")
+                    .resizable()
+                    .opacity(0.5)
+                    .frame(width: 100, height: 90),
+                alignment: .bottom
+            )
         }
         .navigationBarBackButtonHidden(true)
     }
 }
+
  
 struct Views: View {
     
